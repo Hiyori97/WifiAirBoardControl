@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import xyz.a0w0o0w0.wifi_control.Connect.ConnectInfo;
 import xyz.a0w0o0w0.wifi_control.Connect.LocalSocket;
@@ -90,6 +91,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         socketClient.setupAddress(connectInfo.getServerAddress(), connectInfo.getServerPort());
         ip_textView.setText(connectInfo.getServerAddress());
         port_textView.setText(connectInfo.getServerPort());
+    }
+
+    @Override
+    public void onAddressError() {
+        // 当输入地址错误时会回调此接口
+        Toast.makeText(this, "输入地址错误", Toast.LENGTH_SHORT).show();
+        connectInfo.getDialog().show();
     }
 
     @Override

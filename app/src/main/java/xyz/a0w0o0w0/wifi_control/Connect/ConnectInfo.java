@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import xyz.a0w0o0w0.wifi_control.R;
 
 public class ConnectInfo {
@@ -52,7 +55,7 @@ public class ConnectInfo {
     }
 
 
-    /** Interface */
+    /** Private Method */
 
     /**
      * 创建一个Dialog对象
@@ -73,24 +76,61 @@ public class ConnectInfo {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                serverAddress = String.valueOf(IP_editText.getText());
-                serverPort = String.valueOf(Port_editText.getText());
-                Log.i("ConnectInfo", "ServerAddress Change to " + serverAddress);
-                Log.i("ConnectInfo", "ServerPort Change to " + serverPort);
-                if (mCalllBack != null)
-                    mCalllBack.onAddressChange();
+                String IP = String.valueOf(IP_editText.getText());
+                String port = String.valueOf(Port_editText.getText());
+                if (isIP(IP) && isPort(port)) {
+                    serverAddress = IP;
+                    serverPort = port;
+                    Log.i("ConnectInfo", "ServerAddress Change to " + serverAddress);
+                    Log.i("ConnectInfo", "ServerPort Change to " + serverPort);
+                    if (mCalllBack != null)
+                        mCalllBack.onAddressChange();
+                } else {
+                    Log.w("ConnectInfo", "Server Address or Port Input is error");
+                    if (mCalllBack != null)
+                        mCalllBack.onAddressError();
+                }
             }
         });
         return builder.create();
     }
 
+    /**
+     * IP合法性检查
+     */
+    private boolean isIP(String addr) {
+        if (addr.length() < 7 || addr.length() > 15)
+            return false;
 
-    /** Private Method */
+        String rexp = "^([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}$";
+        Pattern pat = Pattern.compile(rexp);
+        Matcher mat = pat.matcher(addr);
+        return mat.find();
+    }
+
+    /**
+     * Port合法性检查
+     */
+    private boolean isPort(String port) {
+        int portNum;
+        try {
+            portNum = Integer.getInteger(port);
+        } catch (Exception e) {
+            Log.e("ConnectInfo", "Input a illegal Port");
+            return false;
+        }
+        return portNum > 0 && portNum < 65536;
+    }
+
+
+    /** Interface */
 
     /**
      * 地址变化时的回调接口
      */
     public interface AddressChangeCallBack {
         void onAddressChange();
+
+        void onAddressError();
     }
 }
