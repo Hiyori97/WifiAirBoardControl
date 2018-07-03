@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_connect_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.administrator.wifi_control.MyTextView
+        android:id="@+id/TypeIP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/IP"
+        android:layout_alignBottom="@+id/IP"
+        android:layout_toStartOf="@+id/IP"
+        android:text="@string/ipaddress_hint"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+
+    <com.example.administrator.wifi_control.MyTextView
+        android:id="@+id/typeport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Port"
+        android:layout_alignBottom="@+id/Port"
+        android:layout_alignEnd="@+id/TypeIP"
+        android:text="@string/port_hint"
+        android:textColor="@color/black"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/Port"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/IP"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/shape_radius"
+        android:hint="@string/port_input_hint" />
+
+    <EditText
+        android:id="@+id/IP"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/Port"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/shape_radius"
+        android:hint="@string/ipaddress_input_hint" />
+
+</RelativeLayout>

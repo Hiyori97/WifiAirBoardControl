@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="xyz.a0w0o0w0.wifi_control.MainActivity">
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send" />
+
+    <xyz.a0w0o0w0.wifi_control.MyTextView_heavy
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="23dp"
+        android:text="风速控制角度"
+        android:textColor="@color/black"
+        android:textSize="36sp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="280dp"
+        android:layout_height="2dp"
+        android:layout_alignStart="@+id/Title"
+        android:layout_below="@+id/Title"
+        android:layout_marginTop="13dp"
+        android:background="@color/black" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:max="180"
+        android:maxHeight="40dp"
+        android:maxWidth="40dp"
+        android:progressDrawable="@drawable/seek_bar"
+        android:thumb="@null" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/view"
+        android:layout_below="@+id/seekBar"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="34dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/isLink"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp"
+        android:background="@drawable/shape_radius"
+        android:text="连接开发板"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/connect"
+        android:layout_alignBottom="@+id/connect"
+        android:layout_alignEnd="@+id/textView"
+        android:background="@drawable/shape_radius"
+        android:text="设置"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/connect"
+        android:layout_toEndOf="@+id/Title"
+        android:text="port" />
+
+    <TextView
+        android:id="@+id/ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/view"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="24dp"
+        android:text="ip" />
+
+    <TextView
+        android:id="@+id/isLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/port"
+        android:layout_below="@+id/ip"
+        android:text="未连接" />
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/set"
+        android:layout_below="@+id/isLink"
+        android:layout_marginTop="47dp"
+        android:text="unknown" />
+
+    <TextView
+        android:id="@+id/dutyCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:text="unknown" />
+
+</RelativeLayout>
