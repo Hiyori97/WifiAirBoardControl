@@ -114,11 +114,11 @@ public class LocalSocket {
     public void sendAngleOrPWM(int angleOrPWMValue) {
         String angleStr = String.format(Locale.US, "%02d", angleOrPWMValue);
         switch (mode) {
-            case PWM:
+            case angle:
                 this.localSocketClient.sendString(angleSendHead + angleStr);
                 Log.i("LocalSocket", "Send Angle: " + angleStr);
                 break;
-            case angle:
+            case PWM:
                 this.localSocketClient.sendString(PWMSendHead + angleStr);
                 Log.i("LocalSocket", "Send PWM: " + angleStr);
                 break;

@@ -77,9 +77,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.connect:
-                if (socketClient.isLinked())
+                if (socketClient.isLinked()) {
+                    // 先停机
+                    socketClient.sendAngleOrPWM(0);
                     socketClient.disconnect();
-                else
+                } else
                     socketClient.connect();
                 isLink_textView.setText("连接中");
                 break;
@@ -121,8 +123,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     @Override
     public void onLinkChange(Boolean isLinked) {
         // 当连接状态改变后会回调此接口
-        if (isLinked)
+        if (isLinked) {
             isLink_textView.setText("已连接");
+            socketClient.sendAngleOrPWM(0);
+        }
         else
             isLink_textView.setText("未连接");
     }
