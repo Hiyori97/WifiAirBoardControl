@@ -16,6 +16,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
 
     // seekbar 角度值
     private int angleValue;
+    private SeekBar seekBar;
 
     private TextView angle_textView;
     private TextView isLink_textView;
@@ -33,26 +34,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Button listener
-        findViewById(R.id.send).setOnClickListener(this);
-        findViewById(R.id.set).setOnClickListener(this);
-        findViewById(R.id.connect).setOnClickListener(this);
-        findViewById(R.id.setMode).setOnClickListener(this);
-
-        //初始化seekbar
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(this);
-
-        // 初始化链接信息控制
-        // TODO USE SP TO SAVE DATA
-        connectInfo = new ConnectInfo(this, "192.168.5.5", "8080");
-        connectInfo.setAddressChangeCallBack(this);
-        // 初始化socket客户端
-        socketClient = new LocalSocket(connectInfo.getServerAddress(), connectInfo.getServerPort());
-        socketClient.setLinkChangeCallBack(this);
-        socketClient.setReceiveDataCallBack(this);
-        socketClient.mode = LocalSocket.sendMode.angle;
-
         // TextView
         isLink_textView = findViewById(R.id.isLink);
         ip_textView = findViewById(R.id.port);
@@ -61,13 +42,34 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         PWMControl_textView = findViewById(R.id.PWMControl);
         angle_textView = findViewById(R.id.angle);
         mode_textView = findViewById(R.id.showMode);
-        // TextView Init
-        isLink_textView.setText("未连接");
+
+        // Button listener
+        findViewById(R.id.send).setOnClickListener(this);
+        findViewById(R.id.set).setOnClickListener(this);
+        findViewById(R.id.connect).setOnClickListener(this);
+        findViewById(R.id.setMode).setOnClickListener(this);
+
+        //初始化seekbar
+        seekBar = findViewById(R.id.seekBar);
+        seekBar.setMax(90);
+        seekBar.setOnSeekBarChangeListener(this);
+        angle_textView.setText("当前设定角度值是:0 / " + String.valueOf(seekBar.getMax()));
+
+        // 初始化链接信息控制
+        // TODO USE SP TO SAVE DATA
+        connectInfo = new ConnectInfo(this, "192.168.5.5", "8080");
+        connectInfo.setAddressChangeCallBack(this);
         ip_textView.setText(connectInfo.getServerAddress());
         port_textView.setText(connectInfo.getServerPort());
+
+        // 初始化socket客户端
+        socketClient = new LocalSocket(connectInfo.getServerAddress(), connectInfo.getServerPort());
+        socketClient.setLinkChangeCallBack(this);
+        socketClient.setReceiveDataCallBack(this);
+        socketClient.mode = LocalSocket.sendMode.angle;
+        isLink_textView.setText("未连接");
         angleControl_textView.setText(socketClient.getAngleControl());
         PWMControl_textView.setText(socketClient.getPWMControl());
-        angle_textView.setText(String.valueOf(angleValue));
         mode_textView.setText(socketClient.mode.toString());
     }
 
@@ -88,10 +90,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
                 socketClient.sendAngleOrPWM(angleValue);
                 break;
             case R.id.setMode:
-                if (socketClient.mode == LocalSocket.sendMode.angle)
+                socketClient.sendAngleOrPWM(0);
+                seekBar.setProgress(0);
+                if (socketClient.mode == LocalSocket.sendMode.angle) {
                     socketClient.mode = LocalSocket.sendMode.PWM;
-                else
+                    seekBar.setMax(100);
+                } else {
                     socketClient.mode = LocalSocket.sendMode.angle;
+                    seekBar.setMax(90);
+                }
                 mode_textView.setText(socketClient.mode.toString());
                 break;
         }
@@ -131,7 +138,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         //进度移动时，进入这个方法，每一小点 的改变都要来执行一次
         //在这里给进度条下面的textView赋值，用于展示当前的进度刻度
-        angle_textView.setText("当前角度值是:" + progress + "  / 180 ");
+        String sendMode;
+        if (socketClient.mode == LocalSocket.sendMode.angle)
+            sendMode = "当前设定角度值是:";
+        else
+            sendMode = "当前设定PWM值是:";
+        angle_textView.setText(sendMode + progress + " / " + String.valueOf(seekBar.getMax()));
         angleValue = progress;
     }
 
