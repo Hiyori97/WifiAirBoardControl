@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         bindViews();//seekbar相关设置
 
         // 初始化链接信息控制
+        // TODO USE SP TO SAVE DATA
         connectInfo = new ConnectInfo(this, "192.168.5.5", "8080");
         connectInfo.setAddressChangeCallBack(this);
         // 初始化socket客户端
@@ -69,8 +70,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         angleControl_textView.setText(socketClient.getAngleControl());
         PWMControl_textView.setText(socketClient.getPWMControl());
         angle_textView.setText("0");
-        // TODO getmodeString
-        mode_textView.setText("angle");
+        mode_textView.setText(socketClient.mode.toString());
     }
 
     @Override
@@ -90,15 +90,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
                 socketClient.sendAngleOrPWM(angle_value);
                 break;
             case R.id.setMode:
-                if (socketClient.mode == LocalSocket.sendMode.angle) {
+                if (socketClient.mode == LocalSocket.sendMode.angle)
                     socketClient.mode = LocalSocket.sendMode.PWM;
-                    // TODO getmodeString
-                    mode_textView.setText("PWM");
-                } else {
+                else
                     socketClient.mode = LocalSocket.sendMode.angle;
-                    // TODO getmodeString
-                    mode_textView.setText("angle");
-                }
+                mode_textView.setText(socketClient.mode.toString());
                 break;
         }
     }
