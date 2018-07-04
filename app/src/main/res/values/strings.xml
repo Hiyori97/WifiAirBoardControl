@@ -9,4 +9,5 @@
     <string name="titleHead">风速控制角度</string>
     <string name="connectButton">连接开发板</string>
     <string name="setButton">设置</string>
+    <string name="setModeButton">设置MODE</string>
 </resources>

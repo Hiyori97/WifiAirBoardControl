@@ -13,6 +13,17 @@
         android:layout_height="wrap_content"
         android:text="@string/sendButton" />
 
+    <Button
+        android:id="@+id/setMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setModeButton" />
+
+    <TextView
+        android:id="@+id/showMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <xyz.a0w0o0w0.wifi_control.MyTextView_heavy
         android:id="@+id/Title"
         android:layout_width="wrap_content"

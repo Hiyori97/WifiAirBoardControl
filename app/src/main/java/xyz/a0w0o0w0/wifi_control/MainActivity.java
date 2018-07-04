@@ -22,6 +22,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     private TextView port_textView;
     private TextView angleControl_textView;
     private TextView PWMControl_textView;
+    private TextView mode_textView;
 
     private ConnectInfo connectInfo;
     private LocalSocket socketClient;
@@ -35,10 +36,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         Button send_button = findViewById(R.id.send);
         Button set_button = findViewById(R.id.set);
         Button connect_button = findViewById(R.id.connect);
+        Button setMode_button = findViewById(R.id.setMode);
         // Button SetListener
         send_button.setOnClickListener(this);
         set_button.setOnClickListener(this);
         connect_button.setOnClickListener(this);
+        setMode_button.setOnClickListener(this);
 
         bindViews();//seekbar相关设置
 
@@ -49,6 +52,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         socketClient = new LocalSocket(connectInfo.getServerAddress(), connectInfo.getServerPort());
         socketClient.setLinkChangeCallBack(this);
         socketClient.setReceiveDataCallBack(this);
+        socketClient.mode = LocalSocket.sendMode.angle;
 
         // TextView
         isLink_textView = findViewById(R.id.isLink);
@@ -57,6 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         angleControl_textView = findViewById(R.id.angleControl);
         PWMControl_textView = findViewById(R.id.PWMControl);
         angle_textView = findViewById(R.id.angle);
+        mode_textView = findViewById(R.id.showMode);
         // TextView Init
         isLink_textView.setText("未连接");
         ip_textView.setText(connectInfo.getServerAddress());
@@ -64,6 +69,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         angleControl_textView.setText(socketClient.getAngleControl());
         PWMControl_textView.setText(socketClient.getPWMControl());
         angle_textView.setText("0");
+        // TODO getmodeString
+        mode_textView.setText("angle");
     }
 
     @Override
@@ -81,6 +88,17 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
                 break;
             case R.id.send:
                 socketClient.sendAngleOrPWM(angle_value);
+                break;
+            case R.id.setMode:
+                if (socketClient.mode == LocalSocket.sendMode.angle) {
+                    socketClient.mode = LocalSocket.sendMode.PWM;
+                    // TODO getmodeString
+                    mode_textView.setText("PWM");
+                } else {
+                    socketClient.mode = LocalSocket.sendMode.angle;
+                    // TODO getmodeString
+                    mode_textView.setText("angle");
+                }
                 break;
         }
     }
