@@ -14,19 +14,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LocalSocket {
-    // 角度的标识符
-    private final String angleSetHead = "AS";
-    // 占空比的标识符
+    // 设置角度的标识符
+    private final String angleSendHead = "AS";
+    // 设置PWM的标识符
+    private final String PWMSendHead = "PS";
+    // 角度当前值的标识符
     private final String angleControlHead = "AC";
-    // 温度的标识符
+    // PWM当前值的标识符
     private final String PWMControlHead = "PC";
     // 包尾
     private final byte[] TrailerData = {'\n'};
-
+    // 发送模式
+    public sendMode mode = sendMode.angle;
     // 多余三个数据替换为Map实现
     private String angleControl = "unknown";
     private String PWMControl = "unknown";
-
     private SocketClient localSocketClient;
     private LinkChangeCallBack mLinkChangeCallBack;
     private ReceiveDataCallBack mReceiveDataCallBack;
@@ -109,8 +111,16 @@ public class LocalSocket {
      */
     public void sendAngleOrPWM(int angleOrPWMValue) {
         String angleStr = String.format(Locale.US, "%02d", angleOrPWMValue);
-        this.localSocketClient.sendString(angleSetHead + angleStr);
-        Log.i("LocalSocket", "Send Angle: " + angleStr);
+        switch (mode) {
+            case PWM:
+                this.localSocketClient.sendString(angleSendHead + angleStr);
+                Log.i("LocalSocket", "Send Angle: " + angleStr);
+                break;
+            case angle:
+                this.localSocketClient.sendString(PWMSendHead + angleStr);
+                Log.i("LocalSocket", "Send PWM: " + angleStr);
+                break;
+        }
     }
 
     /**
@@ -203,11 +213,21 @@ public class LocalSocket {
     }
 
     /**
+     * ENUM
+     */
+
+    public enum sendMode {
+        PWM,
+        angle,
+    }
+
+    /**
      * 连接回调接口
      */
     public interface LinkChangeCallBack {
         void onLinkChange(Boolean isLinked);
     }
+
 
     /**
      * 接收回调接口
