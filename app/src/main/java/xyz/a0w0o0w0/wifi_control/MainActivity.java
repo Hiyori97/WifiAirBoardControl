@@ -3,6 +3,7 @@ package xyz.a0w0o0w0.wifi_control;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     // seekbar 角度值
     private int angleValue;
     private SeekBar seekBar;
+
+    private EditText sendAntChar_editText;
 
     private TextView angle_textView;
     private TextView isLink_textView;
@@ -33,6 +36,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // EditText
+        sendAntChar_editText = findViewById(R.id.sendAnyChar);
 
         // TextView
         isLink_textView = findViewById(R.id.isLink);
@@ -56,7 +62,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         angle_textView.setText("当前设定角度值是:0 / " + String.valueOf(seekBar.getMax()));
 
         // 初始化链接信息控制
-        // TODO USE SP TO SAVE DATA
         connectInfo = new ConnectInfo(this, "192.168.1.1", "8080");
         connectInfo.setAddressChangeCallBack(this);
         ip_textView.setText(connectInfo.getServerAddress());
@@ -89,7 +94,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
                 connectInfo.getDialog().show();
                 break;
             case R.id.send:
-                socketClient.sendAngleOrPWM(angleValue);
+                String sendData = sendAntChar_editText.getText().toString();
+                if (!sendData.equals("")) {
+                    socketClient.sendString(sendData);
+                    sendAntChar_editText.setText("");
+                }
                 break;
             case R.id.setMode:
                 socketClient.sendAngleOrPWM(0);
@@ -126,8 +135,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         if (isLinked) {
             isLink_textView.setText("已连接");
             socketClient.sendAngleOrPWM(0);
-        }
-        else
+        } else
             isLink_textView.setText("未连接");
     }
 

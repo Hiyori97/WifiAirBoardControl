@@ -7,6 +7,13 @@
     android:fitsSystemWindows="true"
     tools:context="xyz.a0w0o0w0.wifi_control.MainActivity">
 
+    <EditText
+        android:id="@+id/sendAnyChar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:labelFor="@+id/sendAnyChar" />
+
     <TextView
         android:id="@+id/showMode"
         android:layout_width="wrap_content"
