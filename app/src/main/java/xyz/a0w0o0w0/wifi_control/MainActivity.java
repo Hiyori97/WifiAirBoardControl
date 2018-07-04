@@ -3,7 +3,6 @@ package xyz.a0w0o0w0.wifi_control;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,9 +11,11 @@ import xyz.a0w0o0w0.wifi_control.Connect.ConnectInfo;
 import xyz.a0w0o0w0.wifi_control.Connect.LocalSocket;
 
 public class MainActivity extends Activity implements View.OnClickListener, ConnectInfo
-        .AddressChangeCallBack, LocalSocket.LinkChangeCallBack, LocalSocket.ReceiveDataCallBack {
+        .AddressChangeCallBack, LocalSocket.LinkChangeCallBack, LocalSocket.ReceiveDataCallBack,
+        SeekBar.OnSeekBarChangeListener {
 
-    private int angle_value;
+    // seekbar 角度值
+    private int angleValue;
 
     private TextView angle_textView;
     private TextView isLink_textView;
@@ -32,18 +33,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Button
-        Button send_button = findViewById(R.id.send);
-        Button set_button = findViewById(R.id.set);
-        Button connect_button = findViewById(R.id.connect);
-        Button setMode_button = findViewById(R.id.setMode);
-        // Button SetListener
-        send_button.setOnClickListener(this);
-        set_button.setOnClickListener(this);
-        connect_button.setOnClickListener(this);
-        setMode_button.setOnClickListener(this);
+        // Button listener
+        findViewById(R.id.send).setOnClickListener(this);
+        findViewById(R.id.set).setOnClickListener(this);
+        findViewById(R.id.connect).setOnClickListener(this);
+        findViewById(R.id.setMode).setOnClickListener(this);
 
-        bindViews();//seekbar相关设置
+        //初始化seekbar
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(this);
 
         // 初始化链接信息控制
         // TODO USE SP TO SAVE DATA
@@ -69,7 +67,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         port_textView.setText(connectInfo.getServerPort());
         angleControl_textView.setText(socketClient.getAngleControl());
         PWMControl_textView.setText(socketClient.getPWMControl());
-        angle_textView.setText("0");
+        angle_textView.setText(String.valueOf(angleValue));
         mode_textView.setText(socketClient.mode.toString());
     }
 
@@ -87,7 +85,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
                 connectInfo.getDialog().show();
                 break;
             case R.id.send:
-                socketClient.sendAngleOrPWM(angle_value);
+                socketClient.sendAngleOrPWM(angleValue);
                 break;
             case R.id.setMode:
                 if (socketClient.mode == LocalSocket.sendMode.angle)
@@ -111,7 +109,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     public void onAddressError() {
         // 当输入地址错误时会回调此接口
         Toast.makeText(this, "输入地址错误", Toast.LENGTH_SHORT).show();
-        connectInfo.getDialog().show();
     }
 
     @Override
@@ -130,28 +127,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         PWMControl_textView.setText(PWMControl);
     }
 
-    private void bindViews() {
-        //初始化seekbar
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //进度移动时，进入这个方法，每一小点 的改变都要来执行一次
-                //在这里给进度条下面的textView赋值，用于展示当前的进度刻度
-                angle_textView.setText("当前角度值是:" + progress + "  / 180 ");
-                angle_value = progress;
-            }
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        //进度移动时，进入这个方法，每一小点 的改变都要来执行一次
+        //在这里给进度条下面的textView赋值，用于展示当前的进度刻度
+        angle_textView.setText("当前角度值是:" + progress + "  / 180 ");
+        angleValue = progress;
+    }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //鼠标点击进度条时，触发的事件
-            }
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        //鼠标点击进度条时，触发的事件
+    }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                //鼠标松开进度条时，触发的事件
-                socketClient.sendAngleOrPWM(angle_value);
-            }
-        });
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        //鼠标松开进度条时，触发的事件
+        socketClient.sendAngleOrPWM(angleValue);
     }
 }
