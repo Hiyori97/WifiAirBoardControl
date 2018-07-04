@@ -57,7 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
 
         // 初始化链接信息控制
         // TODO USE SP TO SAVE DATA
-        connectInfo = new ConnectInfo(this, "192.168.5.5", "8080");
+        connectInfo = new ConnectInfo(this, "192.168.1.1", "8080");
         connectInfo.setAddressChangeCallBack(this);
         ip_textView.setText(connectInfo.getServerAddress());
         port_textView.setText(connectInfo.getServerPort());

@@ -24,11 +24,13 @@ public class LocalSocket {
     private final String PWMControlHead = "PC";
     // 包尾
     private final byte[] TrailerData = {'\n'};
+
     // 发送模式
     public sendMode mode = sendMode.angle;
-    // 多余三个数据替换为Map实现
+    // 多于三个数据替换为Map实现
     private String angleControl = "unknown";
     private String PWMControl = "unknown";
+
     private SocketClient localSocketClient;
     private LinkChangeCallBack mLinkChangeCallBack;
     private ReceiveDataCallBack mReceiveDataCallBack;
