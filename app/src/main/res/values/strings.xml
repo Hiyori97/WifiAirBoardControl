@@ -5,4 +5,8 @@
     <string name="port_hint">端口 ：</string>
     <string name="ipaddress_input_hint">输入IP地址</string>
     <string name="port_input_hint">输入端口</string>
+    <string name="sendButton">send</string>
+    <string name="titleHead">风速控制角度</string>
+    <string name="connectButton">连接开发板</string>
+    <string name="setButton">设置</string>
 </resources>

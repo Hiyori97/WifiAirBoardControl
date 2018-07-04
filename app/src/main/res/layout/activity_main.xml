@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -13,7 +11,7 @@
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="send" />
+        android:text="@string/sendButton" />
 
     <xyz.a0w0o0w0.wifi_control.MyTextView_heavy
         android:id="@+id/Title"
@@ -23,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="23dp"
-        android:text="风速控制角度"
+        android:text="@string/titleHead"
         android:textColor="@color/black"
         android:textSize="36sp" />
 
@@ -48,14 +46,13 @@
         android:thumb="@null" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/angle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/view"
         android:layout_below="@+id/seekBar"
         android:layout_marginStart="59dp"
-        android:layout_marginTop="34dp"
-        android:text="TextView" />
+        android:layout_marginTop="34dp" />
 
     <Button
         android:id="@+id/connect"
@@ -65,7 +62,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="22dp"
         android:background="@drawable/shape_radius"
-        android:text="连接开发板"
+        android:text="@string/connectButton"
         android:textSize="16sp" />
 
     <Button
@@ -74,9 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/connect"
         android:layout_alignBottom="@+id/connect"
-        android:layout_alignEnd="@+id/textView"
+        android:layout_alignEnd="@+id/angle"
         android:background="@drawable/shape_radius"
-        android:text="设置"
+        android:text="@string/setButton"
         android:textSize="16sp" />
 
     <TextView
@@ -84,8 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/connect"
-        android:layout_toEndOf="@+id/Title"
-        android:text="port" />
+        android:layout_toEndOf="@+id/Title" />
 
     <TextView
         android:id="@+id/ip"
@@ -93,31 +89,27 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/view"
         android:layout_below="@+id/view"
-        android:layout_marginTop="24dp"
-        android:text="ip" />
+        android:layout_marginTop="24dp" />
 
     <TextView
         android:id="@+id/isLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/port"
-        android:layout_below="@+id/ip"
-        android:text="未连接" />
+        android:layout_below="@+id/ip" />
 
     <TextView
-        android:id="@+id/temperature"
+        android:id="@+id/PWMControl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/set"
         android:layout_below="@+id/isLink"
-        android:layout_marginTop="47dp"
-        android:text="unknown" />
+        android:layout_marginTop="47dp" />
 
     <TextView
-        android:id="@+id/dutyCycle"
+        android:id="@+id/angleControl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
-        android:text="unknown" />
+        android:layout_marginTop="31dp" />
 
 </RelativeLayout>

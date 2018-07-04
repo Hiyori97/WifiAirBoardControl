@@ -20,8 +20,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     private TextView isLink_textView;
     private TextView ip_textView;
     private TextView port_textView;
-    private TextView temperature_textView;
-    private TextView dutyCycle_textView;
+    private TextView angleControl_textView;
+    private TextView PWMControl_textView;
 
     private ConnectInfo connectInfo;
     private LocalSocket socketClient;
@@ -54,15 +54,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         isLink_textView = findViewById(R.id.isLink);
         ip_textView = findViewById(R.id.port);
         port_textView = findViewById(R.id.ip);
-        temperature_textView = findViewById(R.id.temperature);
-        dutyCycle_textView = findViewById(R.id.dutyCycle);
-        angle_textView = findViewById(R.id.textView);
+        angleControl_textView = findViewById(R.id.angleControl);
+        PWMControl_textView = findViewById(R.id.PWMControl);
+        angle_textView = findViewById(R.id.angle);
         // TextView Init
         isLink_textView.setText("未连接");
         ip_textView.setText(connectInfo.getServerAddress());
         port_textView.setText(connectInfo.getServerPort());
-        temperature_textView.setText(socketClient.getTemperature());
-        dutyCycle_textView.setText(socketClient.getDutyCycle());
+        angleControl_textView.setText(socketClient.getAngleControl());
+        PWMControl_textView.setText(socketClient.getPWMControl());
         angle_textView.setText("0");
     }
 
@@ -80,7 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
                 connectInfo.getDialog().show();
                 break;
             case R.id.send:
-                socketClient.sendAngle(angle_value);
+                socketClient.sendAngleOrPWM(angle_value);
                 break;
         }
     }
@@ -110,10 +110,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     }
 
     @Override
-    public void onReceiveData(String temperature, String dutyCycle) {
+    public void onReceiveData(String angleControl, String PWMControl) {
         // 当接收到数据会回调此接口
-        temperature_textView.setText(temperature);
-        dutyCycle_textView.setText(dutyCycle);
+        angleControl_textView.setText(angleControl);
+        PWMControl_textView.setText(PWMControl);
     }
 
     private void bindViews() {
@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 //鼠标松开进度条时，触发的事件
-                socketClient.sendAngle(angle_value);
+                socketClient.sendAngleOrPWM(angle_value);
             }
         });
     }
