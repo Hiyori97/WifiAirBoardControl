@@ -114,7 +114,7 @@ public class ConnectInfo {
     private boolean isPort(String port) {
         int portNum;
         try {
-            portNum = Integer.getInteger(port);
+            portNum = Integer.parseInt(port);
         } catch (Exception e) {
             Log.e("ConnectInfo", "Input a illegal Port");
             return false;
