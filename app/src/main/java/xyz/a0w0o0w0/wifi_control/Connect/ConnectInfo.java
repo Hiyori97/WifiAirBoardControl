@@ -3,6 +3,7 @@ package xyz.a0w0o0w0.wifi_control.Connect;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +23,34 @@ public class ConnectInfo {
     private AlertDialog alertDialog;
     private Context context;
     private AddressChangeCallBack mCalllBack;
+    // 数据储存
+    private SharedPreferences mSP;
 
     public ConnectInfo(Context context, String serverAddress, String serverPort) {
-        this.serverAddress = serverAddress;
-        this.serverPort = serverPort;
         this.context = context;
+        mSP = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        if (mSP != null) {
+            this.serverAddress = mSP.getString("IP", "");
+            if (!this.serverAddress.equals("")) {
+                this.serverPort = mSP.getString("port", "");
+                Log.i("ConnectInfo", "Load address:" + this.serverAddress + ", " +
+                        "port:" + this.serverPort + " from file");
+            } else {
+                SharedPreferences.Editor editor = mSP.edit();
+                editor.putString("IP", serverAddress);
+                editor.putString("port", serverPort);
+                editor.apply();
+                Log.i("ConnectInfo", "Create XML to save data");
+                Log.i("ConnectInfo", "Save address:" + serverAddress + ", " +
+                        "port:" + serverPort + " to file");
+                this.serverAddress = serverAddress;
+                this.serverPort = serverPort;
+            }
+        } else {
+            Log.e("ConnectInfo", "Can't create XML to save data");
+            this.serverAddress = serverAddress;
+            this.serverPort = serverPort;
+        }
     }
 
     public String getServerAddress() {
@@ -81,6 +105,14 @@ public class ConnectInfo {
                 if (isIP(IP) && isPort(port)) {
                     serverAddress = IP;
                     serverPort = port;
+                    if (mSP != null) {
+                        SharedPreferences.Editor editor = mSP.edit();
+                        editor.putString("IP", serverAddress);
+                        editor.putString("port", serverPort);
+                        editor.apply();
+                        Log.i("ConnectInfo", "Save address:" + serverAddress + ", " +
+                                "port:" + serverPort + " to file");
+                    }
                     Log.i("ConnectInfo", "ServerAddress Change to " + serverAddress);
                     Log.i("ConnectInfo", "ServerPort Change to " + serverPort);
                     if (mCalllBack != null)
@@ -116,7 +148,7 @@ public class ConnectInfo {
         try {
             portNum = Integer.parseInt(port);
         } catch (Exception e) {
-            Log.e("ConnectInfo", "Input a illegal Port");
+            Log.w("ConnectInfo", "Input a illegal Port");
             return false;
         }
         return portNum > 0 && portNum < 65536;
