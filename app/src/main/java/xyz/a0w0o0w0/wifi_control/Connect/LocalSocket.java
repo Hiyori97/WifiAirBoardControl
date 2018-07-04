@@ -9,22 +9,23 @@ import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LocalSocket {
     // 角度的标识符
-    private final String angleHead = "Angle:";
+    private final String angleSetHead = "AS";
     // 占空比的标识符
-    private final String dutyCycleHead = "DC:";
+    private final String angleControlHead = "AC";
     // 温度的标识符
-    private final String temperatureHead = "Temp:";
+    private final String PWMControlHead = "PC";
     // 包尾
     private final byte[] TrailerData = {'\n'};
 
     // 多余三个数据替换为Map实现
-    private String dutyCycle = "unknown";
-    private String temperature = "unknown";
+    private String angleControl = "unknown";
+    private String PWMControl = "unknown";
 
     private SocketClient localSocketClient;
     private LinkChangeCallBack mLinkChangeCallBack;
@@ -77,20 +78,20 @@ public class LocalSocket {
                 if (message != null) {
                     Log.i("LocalSocket", "ReceiveData: " + " 【" + responsePacket.getMessage() + "】 " + Arrays.toString(responsePacket.getData()));
 
-                    Pattern pattern = Pattern.compile(dutyCycleHead + "(\\d+),?");
+                    Pattern pattern = Pattern.compile(angleControlHead + "(\\d{2})");
                     Matcher matcher = pattern.matcher(message);
                     if (matcher.find()) {
-                        dutyCycle = matcher.group(1);
-                        Log.i("LocalSocket", "dutyCycle Receive is: " + dutyCycle);
+                        angleControl = matcher.group(1);
+                        Log.i("LocalSocket", "AngleControl Receive is: " + angleControl);
                     }
 
-                    pattern = Pattern.compile(temperatureHead + "(\\d+),?");
+                    pattern = Pattern.compile(PWMControlHead + "(\\d{2})");
                     matcher = pattern.matcher(message);
                     if (matcher.find()) {
-                        temperature = matcher.group(1);
-                        Log.i("LocalSocket", "temperature Receive is: " + temperature);
+                        PWMControl = matcher.group(1);
+                        Log.i("LocalSocket", "PWMControl Receive is: " + PWMControl);
                     }
-                    mReceiveDataCallBack.onReceiveData(temperature, dutyCycle);
+                    mReceiveDataCallBack.onReceiveData(PWMControl, angleControl);
                 }
             }
         });
@@ -104,26 +105,26 @@ public class LocalSocket {
     }
 
     /**
-     * 发送角度
+     * 发送角度或PWM
      */
-    public void sendAngle(int angle) {
-        String angleStr = String.valueOf(angle);
-        this.localSocketClient.sendString(angleHead + angleStr);
+    public void sendAngleOrPWM(int angleOrPWMValue) {
+        String angleStr = String.format(Locale.US, "%02d", angleOrPWMValue);
+        this.localSocketClient.sendString(angleSetHead + angleStr);
         Log.i("LocalSocket", "Send Angle: " + angleStr);
     }
 
     /**
-     * 获取温度
+     * 获取实际的PWM值
      */
-    public String getTemperature() {
-        return temperature;
+    public String getPWMControl() {
+        return PWMControl;
     }
 
     /**
-     * 获取占空比
+     * 获取实际的角度
      */
-    public String getDutyCycle() {
-        return dutyCycle;
+    public String getAngleControl() {
+        return angleControl;
     }
 
     /**
@@ -212,6 +213,6 @@ public class LocalSocket {
      * 接收回调接口
      */
     public interface ReceiveDataCallBack {
-        void onReceiveData(String temperature, String dutyCycle);
+        void onReceiveData(String PWMControl, String angleControl);
     }
 }
