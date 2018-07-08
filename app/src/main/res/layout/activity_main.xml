@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="xyz.a0w0o0w0.wifi_control.MainActivity">
-
-    <EditText
-        android:id="@+id/sendAnyChar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:labelFor="@+id/sendAnyChar" />
-
-    <TextView
-        android:id="@+id/showMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <xyz.a0w0o0w0.wifi_control.MyTextView_heavy
         android:id="@+id/Title"
@@ -40,35 +29,39 @@
         android:layout_marginTop="13dp"
         android:background="@color/black" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:maxHeight="40dp"
-        android:maxWidth="40dp"
-        android:progressDrawable="@drawable/seek_bar"
-        android:thumb="@null" />
-
-    <TextView
-        android:id="@+id/angle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/view"
-        android:layout_below="@+id/seekBar"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="34dp" />
 
     <Button
         android:id="@+id/connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/isLink"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="22dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/setMode"
+        android:layout_marginBottom="39dp"
         android:background="@drawable/shape_radius"
         android:text="@string/connectButton"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/setMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/connect"
+        android:layout_alignStart="@+id/view"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="36dp"
+        android:background="@drawable/shape_radius"
+        android:text="@string/setModeButton" />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/setMode"
+        android:layout_alignBottom="@+id/setMode"
+        android:layout_marginStart="34dp"
+        android:layout_toEndOf="@+id/Title"
+        android:background="@drawable/shape_radius"
+        android:text="@string/sendButton" />
 
     <Button
         android:id="@+id/set"
@@ -76,61 +69,110 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/connect"
         android:layout_alignBottom="@+id/connect"
-        android:layout_alignEnd="@+id/angle"
+        android:layout_alignStart="@+id/send"
         android:background="@drawable/shape_radius"
         android:text="@string/setButton"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/port"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/connect"
-        android:layout_toEndOf="@+id/Title" />
+    <RelativeLayout
+        android:id="@+id/makeup"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/view">
 
-    <TextView
-        android:id="@+id/ip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/view"
-        android:layout_below="@+id/view"
-        android:layout_marginTop="24dp" />
 
-    <TextView
-        android:id="@+id/isLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/port"
-        android:layout_below="@+id/ip" />
+        <EditText
+            android:id="@+id/sendAnyChar"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seekBar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="44dp"
+            android:background="@drawable/shape_radius"
+            android:inputType="text"
+            android:labelFor="@+id/sendAnyChar" />
 
-    <TextView
-        android:id="@+id/PWMControl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/set"
-        android:layout_below="@+id/isLink"
-        android:layout_marginTop="47dp" />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="42dp"
+            android:maxHeight="40dp"
+            android:maxWidth="40dp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:thumb="@null" />
 
-    <TextView
-        android:id="@+id/angleControl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="31dp" />
+        <TextView
+            android:id="@+id/showMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/sendAnyChar"
+            android:layout_alignStart="@+id/sendAnyChar"
+            android:layout_marginBottom="120dp"
+            android:layout_marginStart="7dp" />
 
-    <Button
-        android:id="@+id/setMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/PWMControl"
-        android:layout_toStartOf="@+id/ip"
-        android:text="@string/setModeButton" />
+        <TextView
+            android:id="@+id/isLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/showMode"
+            android:layout_alignBottom="@+id/showMode"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp" />
 
-    <Button
-        android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/isLink"
-        android:text="@string/sendButton" />
+        <TextView
+            android:id="@+id/ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/showMode"
+            android:layout_below="@+id/isLink"
+            android:layout_marginTop="16dp"
+            android:text="ip" />
+
+        <TextView
+            android:id="@+id/port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ip"
+            android:layout_below="@+id/ip"
+            android:layout_marginTop="20dp"
+            android:text="@string/port_hint" />
+
+        <TextView
+            android:id="@+id/angle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/PWMControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/ip"
+            android:layout_alignBottom="@+id/ip"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp" />
+
+        <TextView
+            android:id="@+id/angleControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/sendAnyChar"
+            android:layout_below="@+id/port"
+            android:layout_marginTop="16dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="34dp"
+            app:srcCompat="@drawable/fan1" />
+    </RelativeLayout>
 
 </RelativeLayout>
