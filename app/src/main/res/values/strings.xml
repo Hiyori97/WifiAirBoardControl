@@ -1,8 +1,8 @@
 <resources>
     <string name="introduction">通过拖动进度条来控制角度</string>
-    <string name="app_name">wifi_control</string>
+    <string name="app_name">风板控制系统</string>
     <string name="ipaddress_hint">请输入IP地址：</string>
-    <string name="port_hint">端口 ：</string>
+    <string name="port_hint">请输入端口 ：</string>
     <string name="ipaddress_input_hint">输入IP地址</string>
     <string name="port_input_hint">输入端口</string>
     <string name="sendButton">send</string>
