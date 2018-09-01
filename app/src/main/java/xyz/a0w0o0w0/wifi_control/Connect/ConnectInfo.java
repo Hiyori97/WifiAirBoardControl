@@ -134,7 +134,7 @@ public class ConnectInfo {
         if (addr.length() < 7 || addr.length() > 15)
             return false;
 
-        String rexp = "^([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}$";
+        String rexp = "^([0-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}$";
         Pattern pat = Pattern.compile(rexp);
         Matcher mat = pat.matcher(addr);
         return mat.find();
