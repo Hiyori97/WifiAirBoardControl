@@ -10,4 +10,10 @@
     <string name="connectButton">连接开发板</string>
     <string name="setButton">设置</string>
     <string name="setModeButton">设置MODE</string>
+    <string name="ipshow_hint">IP地址:</string>
+    <string name="portshow_hint">端口:</string>
+    <string name="pwmshow_hint">PWM值:</string>
+    <string name="angle_show_hint">当前角度:</string>
+    <string name="mode_show_hint">当前模式:</string>
+    <string name="link_state_show_hint">连接状态:</string>
 </resources>

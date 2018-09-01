@@ -28,16 +28,14 @@ public class LocalSocket {
     // 发送模式
     public sendMode mode = sendMode.angle;
     // 多于三个数据替换为Map实现
-    private String angleControl = "unknown";
-    private String PWMControl = "unknown";
+    private String angleControl = "0";
+    private String PWMControl = "0";
 
-    private SocketClient localSocketClient;
+    private SocketClient localSocketClient = new SocketClient();
     private LinkChangeCallBack mLinkChangeCallBack;
     private ReceiveDataCallBack mReceiveDataCallBack;
 
     public LocalSocket(String remoteIP, String remotePort) {
-        this.localSocketClient = new SocketClient();
-
         setupAddress(remoteIP, remotePort);
         setupEncoding();
         // 初始化包尾数据
@@ -145,7 +143,7 @@ public class LocalSocket {
     public void setupAddress(String remoteIP, String remotePort) {
         this.localSocketClient.getAddress().setRemoteIP(remoteIP); // 远程端IP地址
         this.localSocketClient.getAddress().setRemotePort(remotePort); // 远程端端口号
-        this.localSocketClient.getAddress().setConnectionTimeout(10 * 1000); // 连接超时时长，单位毫秒
+        this.localSocketClient.getAddress().setConnectionTimeout(5 * 1000); // 连接超时时长，单位毫秒
         Log.i("LocalSocket", "ServerAddress Set to " + remoteIP);
         Log.i("LocalSocket", "ServerPort Set to " + remotePort);
     }
@@ -170,9 +168,6 @@ public class LocalSocket {
     public void setReceiveDataCallBack(ReceiveDataCallBack receiveDataCallBack) {
         mReceiveDataCallBack = receiveDataCallBack;
     }
-
-
-    /** Interface */
 
     /**
      * 发送数据(不建议使用)
@@ -222,6 +217,8 @@ public class LocalSocket {
         PWM,
         angle,
     }
+
+    /** Interface */
 
     /**
      * 连接回调接口

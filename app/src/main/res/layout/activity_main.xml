@@ -72,92 +72,123 @@
     <RelativeLayout
         android:id="@+id/makeup"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/view">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view">
 
+        <TextView
+            android:id="@+id/ip_hint"
+            style="@style/Hint_Text"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/ipshow_hint" />
 
-        <EditText
-            android:id="@+id/sendAnyChar"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seekBar"
+        <TextView
+            android:id="@+id/ip"
+            style="@style/Tips_Text"
+            android:layout_width="150dp"
+            android:layout_alignBaseline="@id/ip_hint"
+            android:layout_toEndOf="@id/ip_hint" />
+
+        <TextView
+            android:id="@+id/port_hint"
+            style="@style/Hint_Text"
+            android:layout_alignBaseline="@id/ip"
+            android:layout_toStartOf="@+id/port"
+            android:text="@string/portshow_hint" />
+
+        <TextView
+            android:id="@+id/port"
+            style="@style/Tips_Text"
+            android:layout_width="60dp"
+            android:layout_alignBaseline="@id/port_hint"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="44dp"
-            android:inputType="text"
-            android:labelFor="@+id/sendAnyChar" />
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:id="@+id/PWMControl_hint"
+            style="@style/Hint_Text"
+            android:layout_alignStart="@id/ip_hint"
+            android:layout_below="@id/ip_hint"
+            android:layout_marginTop="16dp"
+            android:text="@string/pwmshow_hint" />
+
+        <TextView
+            android:id="@+id/PWMControl"
+            style="@style/Tips_Text"
+            android:layout_alignBaseline="@id/PWMControl_hint"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/PWMControl_hint" />
+
+        <TextView
+            android:id="@+id/angleControl_hint"
+            style="@style/Hint_Text"
+            android:layout_alignBaseline="@id/PWMControl"
+            android:layout_toStartOf="@+id/angleControl"
+            android:text="@string/angle_show_hint" />
+
+        <TextView
+            android:id="@+id/angleControl"
+            style="@style/Tips_Text"
+            android:layout_width="30dp"
+            android:layout_alignBaseline="@id/angleControl_hint"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:id="@+id/showMode_hint"
+            style="@style/Hint_Text"
+            android:layout_alignStart="@id/PWMControl_hint"
+            android:layout_below="@id/PWMControl_hint"
+            android:layout_marginTop="16dp"
+            android:text="@string/mode_show_hint" />
+
+        <TextView
+            android:id="@+id/showMode"
+            style="@style/Tips_Text"
+            android:layout_alignBaseline="@id/showMode_hint"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/showMode_hint" />
+
+        <TextView
+            android:id="@+id/isLink_hint"
+            style="@style/Hint_Text"
+            android:layout_alignStart="@id/showMode_hint"
+            android:layout_below="@id/showMode_hint"
+            android:layout_marginTop="16dp"
+            android:text="@string/link_state_show_hint" />
+
+        <TextView
+            android:id="@+id/isLink"
+            style="@style/Tips_Text"
+            android:layout_alignBaseline="@id/isLink_hint"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/isLink_hint" />
 
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="42dp"
-            android:maxHeight="40dp"
-            android:maxWidth="40dp"
-            android:thumb="@null" />
-
-        <TextView
-            android:id="@+id/showMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/sendAnyChar"
-            android:layout_alignStart="@+id/sendAnyChar"
-            android:layout_marginBottom="120dp"
-            android:layout_marginStart="7dp" />
-
-        <TextView
-            android:id="@+id/isLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/showMode"
-            android:layout_alignBottom="@+id/showMode"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="50dp" />
-
-        <TextView
-            android:id="@+id/ip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/showMode"
-            android:layout_below="@+id/isLink"
-            android:layout_marginTop="16dp"
-            android:text="ip" />
-
-        <TextView
-            android:id="@+id/port"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/ip"
-            android:layout_below="@+id/ip"
-            android:layout_marginTop="20dp"
-            android:text="@string/port_hint" />
+            android:layout_below="@id/isLink"
+            android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/angle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/PWMControl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/ip"
-            android:layout_alignBottom="@+id/ip"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="32dp" />
-
-        <TextView
-            android:id="@+id/angleControl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/sendAnyChar"
-            android:layout_below="@+id/port"
-            android:layout_marginTop="16dp" />
+            style="@style/Hint_Text"
+            android:layout_below="@id/seekBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal" />
 
     </RelativeLayout>
+
+    <!--<EditText-->
+    <!--android:id="@+id/sendAnyChar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:inputType="text"-->
+    <!--android:labelFor="@+id/sendAnyChar" />-->
 
 </RelativeLayout>

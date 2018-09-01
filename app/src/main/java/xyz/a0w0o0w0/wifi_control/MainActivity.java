@@ -43,8 +43,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
 
         // TextView
         isLink_textView = findViewById(R.id.isLink);
-        ip_textView = findViewById(R.id.port);
-        port_textView = findViewById(R.id.ip);
+        ip_textView = findViewById(R.id.ip);
+        port_textView = findViewById(R.id.port);
         angleControl_textView = findViewById(R.id.angleControl);
         PWMControl_textView = findViewById(R.id.PWMControl);
         angle_textView = findViewById(R.id.angle);
