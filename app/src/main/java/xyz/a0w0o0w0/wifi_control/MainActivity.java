@@ -2,17 +2,11 @@ package xyz.a0w0o0w0.wifi_control;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import xyz.a0w0o0w0.wifi_control.Connect.ConnectInfo;
 import xyz.a0w0o0w0.wifi_control.Connect.LocalSocket;
@@ -20,11 +14,6 @@ import xyz.a0w0o0w0.wifi_control.Connect.LocalSocket;
 public class MainActivity extends Activity implements View.OnClickListener, ConnectInfo
         .AddressChangeCallBack, LocalSocket.LinkChangeCallBack, LocalSocket.ReceiveDataCallBack,
         SeekBar.OnSeekBarChangeListener {
-
-    Handler handler;
-    ImageView img = null;
-    int[] m = {R.drawable.fan1, R.drawable.fan2, R.drawable.fan3, R.drawable.fan4, R.drawable.fan5, R.drawable.fan6, R.drawable.fan7, R.drawable.fan8, R.drawable.fan9, R.drawable.fan10};
-    int i = 0;
 
     // seekbar 角度值
     private int angleValue;
@@ -47,28 +36,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        img = findViewById(R.id.imageView);
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 0x1222) {
-                    img.setImageResource(m[i]);
-                    i++;
-                    if (i > 9) i = 0;
-                }
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = 0x1222;
-                handler.sendMessage(msg);
-            }
-        }, 15, 15);
-
 
         // EditText
         sendAntChar_editText = findViewById(R.id.sendAnyChar);
