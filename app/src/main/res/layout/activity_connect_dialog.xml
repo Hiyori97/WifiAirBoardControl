@@ -4,48 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <xyz.a0w0o0w0.wifi_control.MyTextView
+    <TextView
         android:id="@+id/TypeIP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/IP"
-        android:layout_alignBottom="@+id/IP"
-        android:layout_toStartOf="@+id/IP"
+        android:layout_marginStart="30dp"
         android:text="@string/ipaddress_hint"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
 
-    <xyz.a0w0o0w0.wifi_control.MyTextView
+    <TextView
         android:id="@+id/typeport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Port"
-        android:layout_alignBottom="@+id/Port"
-        android:layout_alignEnd="@+id/TypeIP"
+        android:layout_alignStart="@+id/TypeIP"
         android:text="@string/port_hint"
         android:textColor="@color/black"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/Port"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/IP"
         android:layout_marginEnd="28dp"
         android:layout_marginTop="28dp"
-        android:background="@drawable/shape_radius"
-        android:hint="@string/port_input_hint" />
+        android:hint="@string/port_input_hint"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/IP"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/Port"
-        android:layout_marginTop="34dp"
-        android:background="@drawable/shape_radius"
-        android:hint="@string/ipaddress_input_hint" />
+        android:layout_marginTop="20dp"
+        android:hint="@string/ipaddress_input_hint"
+        android:inputType="numberDecimal" />
 
 </RelativeLayout>

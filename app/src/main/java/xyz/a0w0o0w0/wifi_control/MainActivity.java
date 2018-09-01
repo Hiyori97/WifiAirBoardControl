@@ -3,7 +3,6 @@ package xyz.a0w0o0w0.wifi_control;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +18,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     private int angleValue;
     private SeekBar seekBar;
 
-    private EditText sendAntChar_editText;
+    // 调试用
+    //private EditText sendAntChar_editText;
 
     private TextView angle_textView;
     private TextView isLink_textView;
@@ -37,8 +37,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 调试用
         // EditText
-        sendAntChar_editText = findViewById(R.id.sendAnyChar);
+        //sendAntChar_editText = findViewById(R.id.sendAnyChar);
 
         // TextView
         isLink_textView = findViewById(R.id.isLink);
@@ -93,13 +94,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
             case R.id.set:
                 connectInfo.getDialog().show();
                 break;
-            case R.id.send:
-                String sendData = sendAntChar_editText.getText().toString();
-                if (!sendData.equals("")) {
-                    socketClient.sendString(sendData);
-                    sendAntChar_editText.setText("");
-                }
-                break;
+            // 调试用
+            // case R.id.send:
+            //     String sendData = sendAntChar_editText.getText().toString();
+            //     if (!sendData.equals("")) {
+            //         socketClient.sendString(sendData);
+            //         sendAntChar_editText.setText("");
+            //     }
+            //     break;
             case R.id.setMode:
                 socketClient.sendAngleOrPWM(0);
                 seekBar.setProgress(0);

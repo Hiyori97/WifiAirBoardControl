@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context="xyz.a0w0o0w0.wifi_control.MainActivity">
 
-    <xyz.a0w0o0w0.wifi_control.MyTextView_heavy
+    <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +36,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/setMode"
         android:layout_marginBottom="39dp"
-        android:background="@drawable/shape_radius"
         android:text="@string/connectButton"
         android:textSize="16sp" />
 
@@ -49,7 +47,6 @@
         android:layout_alignStart="@+id/view"
         android:layout_marginBottom="32dp"
         android:layout_marginStart="36dp"
-        android:background="@drawable/shape_radius"
         android:text="@string/setModeButton" />
 
     <Button
@@ -60,7 +57,6 @@
         android:layout_alignBottom="@+id/setMode"
         android:layout_marginStart="34dp"
         android:layout_toEndOf="@+id/Title"
-        android:background="@drawable/shape_radius"
         android:text="@string/sendButton" />
 
     <Button
@@ -70,7 +66,6 @@
         android:layout_alignBaseline="@+id/connect"
         android:layout_alignBottom="@+id/connect"
         android:layout_alignStart="@+id/send"
-        android:background="@drawable/shape_radius"
         android:text="@string/setButton"
         android:textSize="16sp" />
 
@@ -89,7 +84,6 @@
             android:layout_above="@+id/seekBar"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="44dp"
-            android:background="@drawable/shape_radius"
             android:inputType="text"
             android:labelFor="@+id/sendAnyChar" />
 
@@ -102,7 +96,6 @@
             android:layout_marginBottom="42dp"
             android:maxHeight="40dp"
             android:maxWidth="40dp"
-            android:progressDrawable="@drawable/seek_bar"
             android:thumb="@null" />
 
         <TextView
@@ -165,14 +158,6 @@
             android:layout_below="@+id/port"
             android:layout_marginTop="16dp" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="34dp"
-            app:srcCompat="@drawable/fan1" />
     </RelativeLayout>
 
 </RelativeLayout>
