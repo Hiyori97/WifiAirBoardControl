@@ -18,9 +18,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
     private int angleValue;
     private SeekBar seekBar;
 
-    // 调试用
-    //private EditText sendAntChar_editText;
-
     private TextView angle_textView;
     private TextView isLink_textView;
     private TextView ip_textView;
@@ -37,10 +34,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 调试用
-        // EditText
-        //sendAntChar_editText = findViewById(R.id.sendAnyChar);
-
         // TextView
         isLink_textView = findViewById(R.id.isLink);
         ip_textView = findViewById(R.id.ip);
@@ -51,7 +44,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
         mode_textView = findViewById(R.id.showMode);
 
         // Button listener
-        findViewById(R.id.send).setOnClickListener(this);
         findViewById(R.id.set).setOnClickListener(this);
         findViewById(R.id.connect).setOnClickListener(this);
         findViewById(R.id.setMode).setOnClickListener(this);
@@ -94,14 +86,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Conn
             case R.id.set:
                 connectInfo.getDialog().show();
                 break;
-            // 调试用
-            // case R.id.send:
-            //     String sendData = sendAntChar_editText.getText().toString();
-            //     if (!sendData.equals("")) {
-            //         socketClient.sendString(sendData);
-            //         sendAntChar_editText.setText("");
-            //     }
-            //     break;
             case R.id.setMode:
                 socketClient.sendAngleOrPWM(0);
                 seekBar.setProgress(0);
