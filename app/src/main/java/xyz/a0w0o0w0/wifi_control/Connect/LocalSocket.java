@@ -27,7 +27,6 @@ public class LocalSocket {
 
     // 发送模式
     public sendMode mode = sendMode.angle;
-    // 多于三个数据替换为Map实现
     private String angleControl = "0";
     private String PWMControl = "0";
 
@@ -37,19 +36,18 @@ public class LocalSocket {
 
     public LocalSocket(String remoteIP, String remotePort) {
         setupAddress(remoteIP, remotePort);
-        setupEncoding();
-        // 初始化包尾数据
-        setupTrailerData(TrailerData);
+        // 连接超时时长，单位毫秒
+        localSocketClient.getAddress().setConnectionTimeout(5 * 1000);
+        // 设置编码
+        localSocketClient.setCharsetName("ASCII");
+        // 发送包尾
+        localSocketClient.getSocketPacketHelper().setSendTrailerData(TrailerData);
+        // 接收包尾
+        localSocketClient.getSocketPacketHelper().setReceiveTrailerData(TrailerData);
         // 设置读取策略
-        setupReceiveStrategy();
-    }
-
-    /**
-     * 连接服务器
-     */
-    public void connect() {
-        this.localSocketClient.connect();
-        this.localSocketClient.registerSocketClientDelegate(new SocketClientDelegate() {
+        localSocketClient.getSocketPacketHelper().setReadStrategy(SocketPacketHelper.ReadStrategy.AutoReadToTrailer);
+        // 添加常用回调
+        localSocketClient.registerSocketClientDelegate(new SocketClientDelegate() {
             /**
              * 连接上远程端时的回调
              */
@@ -100,6 +98,13 @@ public class LocalSocket {
     }
 
     /**
+     * 连接服务器
+     */
+    public void connect() {
+        this.localSocketClient.connect();
+    }
+
+    /**
      * 取消连接服务器
      */
     public void disconnect() {
@@ -143,7 +148,6 @@ public class LocalSocket {
     public void setupAddress(String remoteIP, String remotePort) {
         this.localSocketClient.getAddress().setRemoteIP(remoteIP); // 远程端IP地址
         this.localSocketClient.getAddress().setRemotePort(remotePort); // 远程端端口号
-        this.localSocketClient.getAddress().setConnectionTimeout(5 * 1000); // 连接超时时长，单位毫秒
         Log.i("LocalSocket", "ServerAddress Set to " + remoteIP);
         Log.i("LocalSocket", "ServerPort Set to " + remotePort);
     }
@@ -176,43 +180,11 @@ public class LocalSocket {
         this.localSocketClient.sendString(string);
     }
 
-    /**
-     * 设置自动转换String类型到byte[]类型的编码
-     * 如未设置（默认为null），将不能使用{@link SocketClient#sendString(String)}发送消息
-     * 如设置为非null（如UTF-8），在接受消息时会自动尝试在接收线程（非主线程）将接收的byte[]数据依照编码转换为String，在{@link SocketResponsePacket#getMessage()}读取
-     */
-    private void setupEncoding() {
-        this.localSocketClient.setCharsetName("ASCII"); // 设置编码为ASCII
-    }
-
-
-    /** Private Methods */
+    /** ENUM */
 
     /**
-     * 根据连接双方协议设置的包尾数据
-     * <p>
-     * 若无需包尾可删除此行
-     * 注意：
-     * 使用{@link com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadByLength}时不依赖包尾读取数据
+     * 发送模式
      */
-    private void setupTrailerData(byte[] endchars) {
-        // 发送包尾
-        localSocketClient.getSocketPacketHelper().setSendTrailerData(endchars);
-        // 接收包尾
-        localSocketClient.getSocketPacketHelper().setReceiveTrailerData(endchars);
-    }
-
-    /**
-     * 设置读取策略为自动读取到指定的包尾
-     */
-    private void setupReceiveStrategy() {
-        localSocketClient.getSocketPacketHelper().setReadStrategy(SocketPacketHelper.ReadStrategy.AutoReadToTrailer);
-    }
-
-    /**
-     * ENUM
-     */
-
     public enum sendMode {
         PWM,
         angle,
