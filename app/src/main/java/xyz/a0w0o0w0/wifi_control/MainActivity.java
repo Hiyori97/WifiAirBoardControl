@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
+public class MainActivity extends Activity {
 
     private SeekBar seekBar;
     private TextView angle_textView;
@@ -50,8 +50,31 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
         //初始化seekbar
         seekBar = findViewById(R.id.seekBar);
         seekBar.setMax(90);
-        seekBar.setOnSeekBarChangeListener(this);
         angle_textView.setText("当前设定角度值是:0 / " + String.valueOf(seekBar.getMax()));
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            // 进度移动时，进入这个方法，每一小点的改变都要来执行一次
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                String sendModeStr;
+                if (mode == sendMode.angle)
+                    sendModeStr = "当前设定角度值是:";
+                else
+                    sendModeStr = "当前设定PWM值是:";
+                angle_textView.setText(sendModeStr + progress + " / " + String.valueOf(seekBar.getMax()));
+            }
+
+            // 点击进度条时，触发的事件
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+
+            // 松开进度条时，触发的事件
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                sendAngleOrPWM(seekBar.getProgress());
+            }
+        });
 
         // Button listener
         findViewById(R.id.connect).setOnClickListener(new View.OnClickListener() {
@@ -83,7 +106,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 
         // 初始化socket客户端
         // 远程端IP地址
-        localSocketClient.getAddress().setRemoteIP("192.168.4.1");
+        localSocketClient.getAddress().setRemoteIP("192.168.1.12");
         // 远程端端口号
         localSocketClient.getAddress().setRemotePort("8086");
         // 连接超时时长，单位毫秒
@@ -137,29 +160,6 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
                 }
             }
         });
-    }
-
-    // 进度移动时，进入这个方法，每一小点的改变都要来执行一次
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        String sendModeStr;
-        if (mode == sendMode.angle)
-            sendModeStr = "当前设定角度值是:";
-        else
-            sendModeStr = "当前设定PWM值是:";
-        angle_textView.setText(sendModeStr + progress + " / " + String.valueOf(seekBar.getMax()));
-    }
-
-    // 点击进度条时，触发的事件
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    }
-
-
-    // 松开进度条时，触发的事件
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        sendAngleOrPWM(seekBar.getProgress());
     }
 
     // 发送角度或PWM
