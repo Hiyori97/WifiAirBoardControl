@@ -8,18 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Hint_Text">
+    <style name="TextViewStyle">
         <item name="android:textSize">20sp</item>
-        <item name="android:color">#000000</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
     </style>
 
-    <style name="Tips_Text" parent="Hint_Text">
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:textStyle">normal</item>
+    <style name="ButtonStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginBottom">36dp</item>
     </style>
 
 </resources>
