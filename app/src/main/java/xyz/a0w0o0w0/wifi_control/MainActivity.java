@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
     private void seekBarInit() {
         seekBar = findViewById(R.id.seekBar);
         seekBar.setMax(90);
+
         angle_textView.setText("当前设定角度值是:0 / " + seekBar.getMax());
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             // 进度移动时，进入这个方法，每一小点的改变都要来执行一次
@@ -98,10 +99,12 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if (localSocketClient.isConnected()) {
                     sendAngleOrPWM(0);
+                    isLink_textView.setText("连接状态:断开连接中");
                     localSocketClient.disconnect();
-                } else
+                } else {
+                    isLink_textView.setText("连接状态:连接中");
                     localSocketClient.connect();
-                isLink_textView.setText("连接状态:连接中");
+                }
             }
         });
         findViewById(R.id.setMode).setOnClickListener(new View.OnClickListener() {
